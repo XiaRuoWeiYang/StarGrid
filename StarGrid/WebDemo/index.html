@@ -1,17 +1,56 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f6f5f0"><title>StarGrid · 星星方格</title><link rel="stylesheet" href="style.css"><script defer src="game.js"></script></head>
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f8f2"><title>StarGrid · 星星方格</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ctext y='32' font-size='34'%3E✦%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="style.css"><script defer src="game.js"></script>
+</head>
 <body>
 <main class="phone">
-  <header><a class="brand" href="index.html" aria-label="StarGrid 首页"><span>✦</span> StarGrid</a><span class="edition">每日一点小灵光</span></header>
-  <section class="heading"><div><p class="eyebrow">CHAPTER 01 / 初见星光</p><h1>给星星找个家<span>第 01 关 · 入门</span></h1></div><span class="orbit" aria-hidden="true">✧</span></section>
-  <section class="rules" aria-label="实时规则状态"><div class="section-title">本关规则 <span id="progress">已放置 0 / 6</span></div><ul id="rules"></ul></section>
-  <section class="puzzle" aria-label="游戏棋盘"><div class="board-caption"><span>星光花园</span><span id="moves">0 次操作</span></div><div id="board" class="board" role="group" aria-label="6 行 6 列棋盘"></div><p class="legend">区域 A–F 各放一星 · 相同字母属于同一区域</p></section>
-  <div class="mode" role="group" aria-label="选择操作模式"><button id="star-mode" aria-pressed="true">★ 放置星星</button><button id="cross-mode" aria-pressed="false">× 排除格子</button></div>
-  <p class="instruction">点击放置，再点取消。方向键移动，空格操作。</p>
-  <div class="actions"><button id="undo" disabled><span aria-hidden="true">↶</span>撤销</button><button id="reset"><span aria-hidden="true">↺</span>重置</button><button id="hint"><span aria-hidden="true">✧</span>提示</button></div>
-  <p id="message" role="status" aria-live="polite">从任意一行开始，让六颗星星各就各位。</p>
-  <footer>慢慢来，每一步都算数 <span>✦</span></footer>
+  <header class="topbar"><button id="brand" class="brand" aria-label="返回首页"><span aria-hidden="true">✦</span> StarGrid</button><button id="open-settings" class="icon-button" aria-label="打开设置">⚙</button></header>
+  <section id="home-screen" class="screen" aria-labelledby="home-title">
+    <div class="hero"><p class="eyebrow">A LITTLE SPACE FOR YOUR MIND</p><h1 id="home-title" tabindex="-1">给生活，<br>一点小星光。</h1><p class="subtitle">几条规则，一片属于你的星空。</p>
+      <div class="hero-board" aria-hidden="true"><span>✦</span><span></span><span></span><span></span><span></span><span>✦</span><span></span><span></span><span></span><span></span><span></span><span>✦</span><span></span><span>✦</span><span></span><span></span></div><span class="spark spark-one" aria-hidden="true">✧</span><span class="spark spark-two" aria-hidden="true">✦</span>
+    </div>
+    <button id="start" class="primary start-button"><span id="start-label">开始旅程</span><span aria-hidden="true">→</span></button>
+    <p id="home-progress" class="micro center">初见星光 · 5 个小关卡</p>
+    <div class="section-heading"><h2>初见星光</h2><span class="micro">自由选择 · 慢慢来</span></div><div id="level-list" class="level-list" aria-label="普通关卡"></div>
+    <button id="daily-entry" class="daily-entry"><span class="daily-icon" aria-hidden="true">☼</span><span><strong>每日挑战</strong><small>一道轻松开场，一道认真思考。</small></span><span class="arrow" aria-hidden="true">↗</span></button>
+    <p class="home-note">没有倒计时，也没有错误惩罚。</p>
+  </section>
+  <section id="daily-screen" class="screen" hidden aria-labelledby="daily-title">
+    <button id="daily-back" class="back">← 返回首页</button><p class="eyebrow">YOUR DAILY LITTLE RITUAL</p><h1 id="daily-title" tabindex="-1">今天，也有新星光。</h1><p id="daily-date" class="subtitle"></p>
+    <div class="daily-banner" aria-hidden="true">✧ <span>☼</span> ✧</div>
+    <button id="daily-easy" class="challenge-card easy"><span class="card-top"><span class="tag">简单 · 多解</span><span id="easy-status" class="micro"></span></span><strong>晨间微光 <span aria-hidden="true">↗</span></strong><small>每行每列各一星，星星之间留点距离。<br>不止一种答案，找到你的那一种。</small></button>
+    <button id="daily-hard" class="challenge-card hard"><span class="card-top"><span class="tag">困难 · 唯一解</span><span id="hard-status" class="micro"></span></span><strong>深夜星图 <span aria-hidden="true">↗</span></strong><small>再加上每个颜色区域一星。<br>多想一步，让所有线索恰好相遇。</small></button>
+    <p class="home-note">每天 00:00 更新 · 北京时间<br>今天的两道题，随时都能继续。</p>
+  </section>
+  <section id="game-screen" class="screen" hidden aria-labelledby="game-title">
+    <div class="game-nav"><button id="game-back" class="back">← 返回首页</button><span id="game-kind" class="micro"></span></div>
+    <div class="game-heading"><div><p id="level-number" class="eyebrow"></p><h1 id="game-title" tabindex="-1"></h1></div><span id="solution-kind" class="tag"></span></div>
+    <p id="level-intro" class="subtitle game-intro"></p>
+    <section class="rules" aria-label="实时规则状态"><div class="section-title">本关规则 <span id="progress"></span></div><ul id="rules"></ul></section>
+    <div class="board-caption"><span>点击放星 · 再点取消</span><span id="moves"></span></div>
+    <div id="board" class="board" role="group" aria-label="6 行 6 列棋盘"></div>
+    <p id="legend" class="legend"></p>
+    <div class="actions"><button id="reset"><span aria-hidden="true">↺</span>重新开始</button><button id="hint"><span aria-hidden="true">✧</span>给我一点提示</button></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <button id="completed-next" class="primary full" hidden>下一关 →</button>
+  </section>
+  <section id="settings-screen" class="screen" hidden aria-labelledby="settings-title">
+    <button id="settings-back" class="back">← 返回</button><p class="eyebrow">MAKE YOURSELF AT HOME</p><h1 id="settings-title" tabindex="-1">按你的节奏。</h1><p class="subtitle">把这片小星空，调成喜欢的样子。</p>
+    <div class="settings-list">
+      <label class="setting"><span><strong>轻柔音效</strong><small>放星与通关时的一点声音</small></span><input id="sound-setting" type="checkbox" role="switch"></label>
+      <label class="setting"><span><strong>界面动画</strong><small>星星与提示的轻微动态</small></span><input id="motion-setting" type="checkbox" role="switch"></label>
+      <label class="setting"><span><strong>区域字母</strong><small>用 A–F 辅助区分颜色区域</small></span><input id="letters-setting" type="checkbox" role="switch"></label>
+    </div>
+    <div class="info-card"><h2>怎么玩？</h2><p>直接点格子放星，再点一次取消。满足当前关卡的全部规则，就算通关。</p><p>“多解”表示有多种合法摆法；“唯一解”表示只有一种。所有合法答案都会被接受。</p><p>键盘也可以：方向键移动，空格或回车放星。</p></div>
+    <p class="home-note">进度和设置自动保存在当前浏览器。<br>不跨设备同步；清除浏览器数据会丢失记录。</p>
+  </section>
+  <p id="storage-status" class="storage-status" role="status" hidden></p>
+  <footer>少一点匆忙，多一点星光 <span aria-hidden="true">✦</span></footer>
 </main>
-<dialog id="win" aria-labelledby="win-title"><div class="win-art" aria-hidden="true">✦ ★ ✦</div><p class="eyebrow">GARDEN COMPLETE</p><h2 id="win-title">这一片星光，属于你</h2><p>六颗星星都找到了自己的位置。</p><p id="win-stats"></p><button id="review" class="primary">欣赏棋盘</button><button id="again">再玩一次</button></dialog>
+<dialog id="win" aria-labelledby="win-title"><div class="win-art" aria-hidden="true">✧ ★ ✧</div><p class="eyebrow">A LITTLE WIN, JUST FOR YOU</p><h2 id="win-title">这一片星光，属于你</h2><p id="win-description"></p><div class="win-stats"><div><strong id="win-moves"></strong><span>次操作</span></div><div><strong id="win-hints"></strong><span>次提示</span></div></div><button id="next" class="primary full">下一关 →</button><button id="review" class="text-button">欣赏棋盘</button></dialog>
+<dialog id="reset-dialog" aria-labelledby="reset-title"><h2 id="reset-title">重新点亮这片星空？</h2><p>本次摆放和操作计数会清空。已获得的通关记录会保留。</p><button id="confirm-reset" class="primary full">重新开始</button><button id="cancel-reset" class="text-button" autofocus>继续思考</button></dialog>
 </body></html>
