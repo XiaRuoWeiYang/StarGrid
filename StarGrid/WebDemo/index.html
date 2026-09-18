@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f6f5f0"><title>StarGrid · 星星方格</title><link rel="stylesheet" href="style.css"><script defer src="game.js"></script></head>
+<body>
+<main class="phone">
+  <header><a class="brand" href="index.html" aria-label="StarGrid 首页"><span>✦</span> StarGrid</a><span class="edition">每日一点小灵光</span></header>
+  <section class="heading"><div><p class="eyebrow">CHAPTER 01 / 初见星光</p><h1>给星星找个家<span>第 01 关 · 入门</span></h1></div><span class="orbit" aria-hidden="true">✧</span></section>
+  <section class="rules" aria-label="实时规则状态"><div class="section-title">本关规则 <span id="progress">已放置 0 / 6</span></div><ul id="rules"></ul></section>
+  <section class="puzzle" aria-label="游戏棋盘"><div class="board-caption"><span>星光花园</span><span id="moves">0 次操作</span></div><div id="board" class="board" role="group" aria-label="6 行 6 列棋盘"></div><p class="legend">区域 A–F 各放一星 · 相同字母属于同一区域</p></section>
+  <div class="mode" role="group" aria-label="选择操作模式"><button id="star-mode" aria-pressed="true">★ 放置星星</button><button id="cross-mode" aria-pressed="false">× 排除格子</button></div>
+  <p class="instruction">点击放置，再点取消。方向键移动，空格操作。</p>
+  <div class="actions"><button id="undo" disabled><span aria-hidden="true">↶</span>撤销</button><button id="reset"><span aria-hidden="true">↺</span>重置</button><button id="hint"><span aria-hidden="true">✧</span>提示</button></div>
+  <p id="message" role="status" aria-live="polite">从任意一行开始，让六颗星星各就各位。</p>
+  <footer>慢慢来，每一步都算数 <span>✦</span></footer>
+</main>
+<dialog id="win" aria-labelledby="win-title"><div class="win-art" aria-hidden="true">✦ ★ ✦</div><p class="eyebrow">GARDEN COMPLETE</p><h2 id="win-title">这一片星光，属于你</h2><p>六颗星星都找到了自己的位置。</p><p id="win-stats"></p><button id="review" class="primary">欣赏棋盘</button><button id="again">再玩一次</button></dialog>
+</body></html>
