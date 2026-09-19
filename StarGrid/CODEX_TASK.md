@@ -1,25 +1,70 @@
-# Codex 接手说明 / v2
+# Codex 接手说明 / v3
 
-所有沟通使用中文。当前目标为网页玩法和设计迭代，暂不创建 Unity 正式项目。
+所有沟通使用中文。当前目标仍为 WebDemo 和设计验证，暂不创建 Unity
+正式项目。
 
-## 已实现
-四个页面：开始、每日挑战、游戏、设置。五个普通样板关，每日简单/困难各一题，通关下一关、浏览器本地保存。已按用户确认移除模式切换、X 排除与撤销；只直接点击放星/取消，固定线索除外。
+## 当前产品方向
 
-## 运行与验证
-直接用现代浏览器打开 WebDemo/index.html，保留同目录 style.css、game.js，无依赖、无需构建。可用任意静态服务打开整个 WebDemo。不同地址/端口或 file:// 的存档不共享。
+-   Demo：先完成 20 关。
+-   正式首发：目标 50 关。
+-   长期：按 200、500+ 关持续扩展，不设代码关卡上限。
+-   第一关：2×2 共 4 格教学关。
+-   每日挑战：第一关极简单热身，第二关高难挑战。
+-   不强制每关唯一解；满足全部启用规则即胜利。
 
-可选：安装有 Node.js 时在项目根目录运行 `node Tests/verify.cjs`。测试不是运行时依赖，覆盖规则、多解、提示、每日日期和存档校验。实测记录见 Docs/TEST_REPORT.md。
+## 当前代码事实
 
-## 继续开发约束
-1. 胜利按启用规则，不匹配固定答案；第一至第四关多解，第五关及每日困难唯一解。
-2. 提示必须尊重玩家可扩展的摆法，不可强行纠正到单一参考答案；保护 givens。
-3. 普通关末关回首页，每日困难末关回每日页，无虚假下一关。
-4. 每日以北京时间和版本种子固定，保留旧日正在玩的棋盘；新日期独立保存。
-5. 有界生成器会兜底，允许重复，不宣称无限不重复或服务端公平竞赛。
-6. 已有 solver 只覆盖 6×6 行列一星及区域/接触组合。未来扩展要明确范围、验证和推理步骤。
-7. 后续 Unity 使用 BoardState、RuleSystem/IRule、LevelData、GridManager、GameManager、HintSystem、UIManager、SaveManager 分层。
+现有 WebDemo 已有 5 个 6×6 样板关、本地保存、提示、重新开始和基础
+solver。当前 solver/关卡数据仍存在 6×6、1★等限制，因此 v3
+规划尚未全部实现。
 
-设计入口 GAME_DESIGN.md；数据与难度 Docs/LEVEL_DESIGN.md；规则 Docs/RULE_SYSTEM.md；架构 Docs/UNITY_ARCHITECTURE.md。
+## 下一阶段优先级
 
-## 发布
-本轮只更新本地文件。此前 GitHub 写入连接曾返回 403，不能声称自动同步成功。手动更新时上传根目录文档、Docs、WebDemo、Tests 并保持路径一致；本地 work/ 不属于项目交付内容。
+P0：底层从固定 6×6 改为 size 驱动，支持 Demo 所需多尺寸。 P0：完成第 1
+关 2×2 教学闭环。 P0：普通关扩展到 20 关，按长期难度曲线设计。
+P0：保持按规则胜利，不允许固定答案逐格比较。
+P0：导航、存档、关卡选择不得写死 20 关，从 LevelData 派生。
+P1：每日挑战改为"热身 → 高难"连续两关。 P1：为
+starQuota、givens、blockedCells、solutionType、tags
+等长期字段预留数据契约。 P1：扩展测试覆盖多尺寸、20
+关导航、多解胜利、刷新恢复和每日流程。
+
+## 强制开发规范
+
+开发前必须阅读 Docs/DEVELOPMENT_RULES.md。
+
+Codex
+每次修改代码、关卡、规则、UI、存档或测试，都必须同步更新受影响文档。没有文档同步的修改视为未完成。
+
+每次任务结束至少： 1. 运行适用的自动测试。 2. 做必要浏览器验证。 3. 更新
+Docs/TEST_REPORT.md。 4. 更新 Docs/CHANGELOG.md。 5. 更新 CODEX_TASK.md
+当前状态。 6. 检查
+GAME_DESIGN.md、LEVEL_DESIGN.md、RULE_SYSTEM.md、README.md
+是否需要同步。
+
+## 长期架构约束
+
+-   不得写死 20/50/100/200/500 总关卡数。
+-   LevelData 数据驱动。
+-   SaveData 使用稳定 level id。
+-   RuleSystem 与 UI 分离。
+-   Solver 能力范围必须明确。
+-   新规则必须先有数据契约、validator/solver 支持、测试和教学。
+-   第 501 关原则上应主要通过新增数据实现，而不是修改核心流程。
+-   关卡选择未来按章节/分页/地图组织，禁止一次堆 500 个按钮。
+-   不强制唯一解。
+
+## 设计入口
+
+-   GAME_DESIGN.md
+-   Docs/LEVEL_DESIGN.md
+-   Docs/DEVELOPMENT_RULES.md
+-   Docs/RULE_SYSTEM.md
+-   Docs/UNITY_ARCHITECTURE.md
+-   Docs/TEST_REPORT.md
+-   Docs/CHANGELOG.md
+
+## 当前下一步
+
+从"多尺寸底层 + 第一关教学 +
+20关数据结构"开始开发。每次代码提交必须同步文档。
